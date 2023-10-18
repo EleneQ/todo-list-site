@@ -14,6 +14,54 @@
     <title>ToDo List</title>
   </head>
   <body>
+    <!-- <main>
+      <article class="todos-container">
+        <header>
+          <h1>To-Do List &#128209;</h1>
+        </header>
+
+        <main>
+          <form
+            action="https://formsubmit.co/girlwithcheeks123#gmail.com"
+            method="post"
+          >
+            <div class="todo-input-container">
+              <input
+                id="todo-input-box"
+                type="text"
+                name="todo-input"
+                placeholder="Add a todo..."
+              />
+              <button id="add-btn" type="submit">Add</button>
+            </div>
+          </form>
+
+          <div class="todo-list-container">
+            <ul>
+              <li id="todo">
+                <input id="todo-checkbox" type="checkbox" name="completed" />
+                <input
+                  type="text"
+                  name="todo-text"
+                  value="A new task"
+                  readonly
+                />
+
+                <div class="actions">
+                  <button class="edit-btn">
+                    <i class="fa-solid fa-pen-to-square"></i>
+                  </button>
+                  <button class="delete-btn">
+                    <i class="fa-solid fa-xmark"></i>
+                  </button>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </main>
+      </article>
+    </main> -->
+
     <header>
       <h1 class="page-title">My Todo List</h1>
     </header>
@@ -21,12 +69,17 @@
     <main>
       <div class="main">
         <form
-          action="https://formsubmit.co/girlwithcheeks123#gmail.com"
+          action="https://formsubmit.co/girlwithcheeks123@email.com"
           method="POST"
         >
-          <div class="input-field">
-            <input type="text" name="todo" class="todo-input" />
-            <button type="submit" class="add-btn">
+          <div class="todo-input-container">
+            <input
+              class="todo-input-box"
+              type="text"
+              name="todo"
+              placeholder="Enter a todo..."
+            />
+            <button type="submit" id="add-btn" class="add-btn">
               <i class="fas fa-plus-square"></i>
             </button>
           </div>
@@ -40,16 +93,28 @@
         </form>
 
         <div class="todos-container">
-          <ul class="todo-list">
-            <div class="todo">
-              <li>afafsdfasdffd</li>
-              <button class="completed-btn">
-                <i class="fa-regular fa-square-check"></i>
+          <ul id="todo-list">
+            <!-- <li class="todo">
+              <input
+                class="todo-checkbox"
+                type="checkbox"
+                name="completed"
+              />
+              <input
+                class="todo-text"
+                type="text"
+                name="todo-text"
+                value="A new task"
+                readonly
+              />
+
+              <button class="edit-btn">
+                <i class="fa-solid fa-pen-to-square"></i>
               </button>
               <button class="delete-btn">
-                <i class="fa-solid fa-trash"></i>
+                <i class="fa-solid fa-xmark"></i>
               </button>
-            </div>
+            </li> -->
           </ul>
         </div>
       </div>
