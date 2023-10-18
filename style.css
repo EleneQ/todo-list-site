@@ -35,6 +35,10 @@ select {
   cursor: pointer;
 }
 
+i {
+  pointer-events: none;
+}
+
 /* TODO */
 
 .page-title {
@@ -97,16 +101,10 @@ form {
   padding: 0.7rem;
 }
 
-.todos-container {
-  display: grid;
-  justify-content: center;
-}
-
 .todos-container ul {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items:flex-start;
+  align-items: center;
   gap: 0.5rem;
 }
 
@@ -114,8 +112,13 @@ form {
   background-color: white;
   display: flex;
   align-items: center;
-  justify-content: center;
   color: black;
+  transition: all 0.5s ease;
+}
+
+.fall {
+  transform: translateY(8rem) rotateZ(20deg);
+  opacity: 0;
 }
 
 .todo-checkbox {
@@ -124,6 +127,7 @@ form {
   height: 1rem;
   background-color: white;
   border-radius: 50%;
+  vertical-align: middle;
   border: 1px solid #bebdbd;
   appearance: none;
   -webkit-appearance: none;
@@ -137,9 +141,13 @@ form {
 
 .todo-text {
   outline: none;
-  margin-right: 0.5rem;
-  max-width: 20rem;
-  transition: width 0.5s ease-in;
+  margin-right: 0.8rem;
+  flex: 1;
+}
+
+.completed {
+  text-decoration: line-through;
+  opacity: 0.5;
 }
 
 .todo-text:not(:read-only) {
