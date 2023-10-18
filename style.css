@@ -1,0 +1,93 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+  border: none;
+}
+
+body {
+  font-family: sans-serif;
+  height: 100vh;
+  padding: 0.1px;
+  font-size: 1rem;
+  text-align: center;
+  background-image: linear-gradient(120deg, #f6d365, #fda085);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
+ul,
+li {
+  list-style: none;
+}
+
+button,
+select {
+  cursor: pointer;
+}
+
+.page-title {
+  margin: 2.5rem 0 3.5rem 0;
+  color: white;
+  font-size: 3rem;
+}
+
+form {
+  margin-bottom: 3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.input-field input,
+.add-btn {
+  padding: 0.4rem;
+  font-size: 1.3rem;
+}
+
+.input-field {
+  display: inline-block;
+  background-color: white;
+  margin-right: 0.5rem;
+}
+
+.add-btn {
+  background-color: white;
+  color: #fda085;
+  transition: all 0.3s ease;
+}
+
+.add-btn:hover {
+  background-color: #fda085;
+  color: white;
+}
+
+.select-container {
+  position: relative;
+  overflow: hidden;
+}
+
+.filter-todos {
+  appearance: none;
+  outline: none;
+  border: none;
+  color: #fda085;
+  min-width: 8rem;
+  padding: 0.7rem;
+}
+
+.select-container::after {
+  content: "\25BC";
+  position: absolute;
+  right: 0;
+  color: white;
+  background-color: #ff6f47;
+  font-size: 1rem;
+  padding: 0.7rem;
+  pointer-events: none;
+}

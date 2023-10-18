@@ -15,11 +15,44 @@
   </head>
   <body>
     <header>
-      <h1>My Todo List</h1>
+      <h1 class="page-title">My Todo List</h1>
     </header>
 
     <main>
-      
+      <div class="main">
+        <form
+          action="https://formsubmit.co/girlwithcheeks123#gmail.com"
+          method="POST"
+        >
+          <div class="input-field">
+            <input type="text" name="todo" class="todo-input" />
+            <button type="submit" class="add-btn">
+              <i class="fas fa-plus-square"></i>
+            </button>
+          </div>
+          <div class="select-container">
+            <select class="filter-todos" name="todo-type">
+              <option value="all">All</option>
+              <option value="completed">Completed</option>
+              <option value="uncompleted">Uncompleted</option>
+            </select>
+          </div>
+        </form>
+
+        <div class="todos-container">
+          <ul class="todo-list">
+            <div class="todo">
+              <li>afafsdfasdffd</li>
+              <button class="completed-btn">
+                <i class="fa-regular fa-square-check"></i>
+              </button>
+              <button class="delete-btn">
+                <i class="fa-solid fa-trash"></i>
+              </button>
+            </div>
+          </ul>
+        </div>
+      </div>
     </main>
 
     <script src="./app.js"></script>
