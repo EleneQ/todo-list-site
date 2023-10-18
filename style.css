@@ -93,22 +93,29 @@ form {
   outline: none;
   border: none;
   color: #fda085;
-  min-width: 8rem;
+  min-width: 9.5rem;
   padding: 0.7rem;
 }
 
 .todos-container {
-  display: flex;
+  display: grid;
   justify-content: center;
-  align-items: center;
+}
+
+.todos-container ul {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items:flex-start;
+  gap: 0.5rem;
 }
 
 .todo {
   background-color: white;
   display: flex;
   align-items: center;
+  justify-content: center;
   color: black;
-  margin-bottom: 0.5rem;
 }
 
 .todo-checkbox {
@@ -117,7 +124,6 @@ form {
   height: 1rem;
   background-color: white;
   border-radius: 50%;
-  vertical-align: middle;
   border: 1px solid #bebdbd;
   appearance: none;
   -webkit-appearance: none;
@@ -125,12 +131,19 @@ form {
   cursor: pointer;
 }
 
-.todo-checkbox:checked {
+.todo-checkbox-checked {
   background-color: rgb(21, 194, 21);
 }
 
 .todo-text {
   outline: none;
+  margin-right: 0.5rem;
+  max-width: 20rem;
+  transition: width 0.5s ease-in;
+}
+
+.todo-text:not(:read-only) {
+  color: rgb(240, 106, 204);
 }
 
 .edit-btn,
