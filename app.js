@@ -5,11 +5,11 @@ const addBtn = document.getElementById("add-btn");
 const todoList = document.getElementById("todo-list");
 const filterOption = document.querySelector(".filter-todos");
 
+document.addEventListener("DOMContentLoaded", getTodos);
 addBtn.addEventListener("click", addToDo);
 filterOption.addEventListener("click", (e) => {
   filterTodos(e.target.value);
 });
-document.addEventListener("DOMContentLoaded", getTodos);
 
 function addToDo(e) {
   e.preventDefault();
@@ -34,12 +34,12 @@ function addToDo(e) {
 
 // FUNCTIONS
 function createTodo(todoId, task) {
-  //todo list el
+  // todo list el
   const newTodo = document.createElement("li");
   newTodo.className = "todo";
   todoList.appendChild(newTodo);
 
-  //todo checkbox
+  // todo checkbox
   const todoCheckbox = createInputElement(
     newTodo,
     "checkbox",
@@ -48,7 +48,7 @@ function createTodo(todoId, task) {
     false
   );
 
-  //todo input text
+  // todo input text
   const todoInputText = createInputElement(
     newTodo,
     "text",
@@ -58,14 +58,14 @@ function createTodo(todoId, task) {
   );
   todoInputText.value = task;
 
-  //todo edit button
+  // todo edit button
   const editBtn = createButtonElement(
     newTodo,
     "edit-btn",
     '<i class="fa-solid fa-pen-to-square"></i>'
   );
 
-  //todo delete button
+  // todo delete button
   const deleteBtn = createButtonElement(
     newTodo,
     "delete-btn",
@@ -74,8 +74,7 @@ function createTodo(todoId, task) {
 
   // FUNCTIONS
   checkCompletedTodo(newTodo, todoCheckbox, todoInputText);
-
-  editTodo(todoInputText, editBtn, newTodo);
+  editTodo(todoInputText, editBtn, newTodo, todoId);
   deleteTodo(deleteBtn, newTodo, todoId);
 }
 
@@ -121,21 +120,23 @@ function checkCompletedTodo(newTodo, todoCheckbox, todoInputText) {
   });
 }
 
-function editTodo(todoInputText, editBtn, newTodo) {
-  let isSaving = false;
+function editTodo(todoInputText, editBtn, newTodo, todoId) {
+  let editing = false;
 
   editBtn.addEventListener("click", () => {
     if (newTodo.classList.contains("completed")) return;
 
-    if (!isSaving) {
+    if (!editing) {
       todoInputText.removeAttribute("readonly");
       todoInputText.focus();
       editBtn.innerHTML = "Save";
-      isSaving = true;
-    } else if (isSaving) {
+      editing = true;
+    } else if (editing) {
       todoInputText.setAttribute("readonly", "readonly");
       editBtn.innerHTML = '<i class="fa-solid fa-pen-to-square"></i>';
-      isSaving = false;
+      editing = false;
+
+      saveLocalTodos(todoId, todoInputText.value);
     }
   });
 }
@@ -161,21 +162,21 @@ function filterTodos(option) {
         todo.style.display = "flex";
         break;
       case "completed":
-        flterDisplay(todo, "flex", "none");
+        filterDisplay(todo, "completed", "uncompleted");
         break;
       case "uncompleted":
-        flterDisplay(todo, "none", "flex");
+        filterDisplay(todo, "uncompleted", "completed");
         break;
       default:
         todo.style.display = "flex";
     }
   });
 
-  function flterDisplay(todo, display1, display2) {
-    if (todo.classList.contains("completed")) {
-      todo.style.display = display1;
+  function filterDisplay(todo, display1, display2) {
+    if (todo.classList.contains(display1)) {
+      todo.style.display = "flex";
     } else {
-      todo.style.display = display2;
+      todo.style.display = "none";
     }
   }
 }
@@ -183,8 +184,16 @@ function filterTodos(option) {
 function saveLocalTodos(todoId, todoText) {
   let todos = localStorageCheck();
 
-  // Push an object containing id and text
-  todos.push({ id: todoId, text: todoText });
+  // Check if the todo with the same ID already exists
+  const existingTodo = todos.find((todo) => todo.id === todoId);
+
+  if (existingTodo) {
+    existingTodo.text = todoText;
+  } else {
+    // Create a new todo if it doesn't exist
+    todos.push({ id: todoId, text: todoText });
+  }
+
   localStorage.setItem("todos", JSON.stringify(todos));
 }
 
@@ -203,12 +212,8 @@ function localStorageCheck() {
 
 function removeLocalTodo(todoId) {
   let todos = localStorageCheck();
-  const index = todos.findIndex((todo) => todo.id === todoId);
-
-  if (index !== -1) {
-    todos.splice(index, 1);
-    localStorage.setItem("todos", JSON.stringify(todos));
-  }
+  todos = todos.filter((todo) => todo.id !== todoId);
+  localStorage.setItem("todos", JSON.stringify(todos));
 }
 
 function generateUniqueId() {
