@@ -162,10 +162,10 @@ function filterTodos(option) {
         todo.style.display = "flex";
         break;
       case "completed":
-        filterDisplay(todo, "completed", "uncompleted");
+        filterDisplay(todo, "flex", "none");
         break;
       case "uncompleted":
-        filterDisplay(todo, "uncompleted", "completed");
+        filterDisplay(todo, "none", "flex");
         break;
       default:
         todo.style.display = "flex";
@@ -173,10 +173,10 @@ function filterTodos(option) {
   });
 
   function filterDisplay(todo, display1, display2) {
-    if (todo.classList.contains(display1)) {
-      todo.style.display = "flex";
+    if (todo.classList.contains("completed")) {
+      todo.style.display = display1;
     } else {
-      todo.style.display = "none";
+      todo.style.display = display2;
     }
   }
 }
