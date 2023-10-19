@@ -21,13 +21,23 @@ function addToDo(e) {
     return;
   }
 
+  // Generate a unique ID for the todo
+  const todoId = generateUniqueId();
+
+  createTodo(todoId, task);
+
+  // Saving to local storage
+  saveLocalTodos(todoId, task);
+
+  todoInputBox.value = "";
+}
+
+// FUNCTIONS
+function createTodo(todoId, task) {
   //todo list el
   const newTodo = document.createElement("li");
   newTodo.className = "todo";
   todoList.appendChild(newTodo);
-
-  //saving to local storage
-  saveLocalTodos(todoInputBox.value);
 
   //todo checkbox
   const todoCheckbox = createInputElement(
@@ -62,13 +72,11 @@ function addToDo(e) {
     '<i class="fa-solid fa-xmark"></i>'
   );
 
-  //FUNCTIONS
+  // FUNCTIONS
   checkCompletedTodo(newTodo, todoCheckbox, todoInputText);
 
   editTodo(todoInputText, editBtn, newTodo);
-  deleteTodo(deleteBtn, newTodo);
-
-  todoInputBox.value = "";
+  deleteTodo(deleteBtn, newTodo, todoId);
 }
 
 function createButtonElement(newTodo, className, innerHTML) {
@@ -132,13 +140,13 @@ function editTodo(todoInputText, editBtn, newTodo) {
   });
 }
 
-function deleteTodo(deleteBtn, todo) {
+function deleteTodo(deleteBtn, todo, todoId) {
   deleteBtn.addEventListener("click", () => {
     todo.classList.add("fall");
 
-    //delete only after the transition animation has finished
+    // Delete only after the transition animation has finished
     todo.addEventListener("transitionend", () => {
-      removeLocalTodo(todo);
+      removeLocalTodo(todoId);
       todo.remove();
     });
   });
@@ -172,86 +180,38 @@ function filterTodos(option) {
   }
 }
 
-function saveLocalTodos(todo) {
-  let todos;
-  todos = localStorageCheck(todos);
+function saveLocalTodos(todoId, todoText) {
+  let todos = localStorageCheck();
 
-  todos.push(todo);
+  // Push an object containing id and text
+  todos.push({ id: todoId, text: todoText });
   localStorage.setItem("todos", JSON.stringify(todos));
 }
 
 function getTodos() {
-  let todos;
-  todos = localStorageCheck(todos);
+  let todos = localStorageCheck();
 
-  todos.forEach((task) => {
-    //todo list el
-    const newTodo = document.createElement("li");
-    newTodo.className = "todo";
-    todoList.appendChild(newTodo);
-
-    //todo checkbox
-    const todoCheckbox = createInputElement(
-      newTodo,
-      "checkbox",
-      "completed",
-      "todo-checkbox",
-      false
-    );
-
-    //todo input text
-    const todoInputText = createInputElement(
-      newTodo,
-      "text",
-      "todo-text",
-      "todo-text",
-      true
-    );
-    todoInputText.value = task;
-
-    //todo edit button
-    const editBtn = createButtonElement(
-      newTodo,
-      "edit-btn",
-      '<i class="fa-solid fa-pen-to-square"></i>'
-    );
-
-    //todo delete button
-    const deleteBtn = createButtonElement(
-      newTodo,
-      "delete-btn",
-      '<i class="fa-solid fa-xmark"></i>'
-    );
-
-    //FUNCTIONS
-    checkCompletedTodo(newTodo, todoCheckbox, todoInputText);
-
-    editTodo(todoInputText, editBtn, newTodo);
-    deleteTodo(deleteBtn, newTodo);
+  todos.forEach((todo) => {
+    createTodo(todo.id, todo.text);
   });
 }
 
-function localStorageCheck(todos) {
-  if (localStorage.getItem("todos") === null) {
-    todos = [];
-  } else {
-    todos = JSON.parse(localStorage.getItem("todos"));
-  }
+function localStorageCheck() {
+  let todos = JSON.parse(localStorage.getItem("todos")) || [];
   return todos;
 }
 
-function removeLocalTodo(todo) { //!!!
-  let todos;
-  todos = localStorageCheck(todos);
+function removeLocalTodo(todoId) {
+  let todos = localStorageCheck();
+  const index = todos.findIndex((todo) => todo.id === todoId);
 
-  // const todoIndex = todo.querySelector(".todo-text").value;
-  const todoIndex = todo.children[1].value;
-  const index = todos.indexOf(todoIndex);
-  todos.splice(index, 1);
-
-  localStorage.setItem("todos", JSON.stringify(todos));
+  if (index !== -1) {
+    todos.splice(index, 1);
+    localStorage.setItem("todos", JSON.stringify(todos));
+  }
 }
 
-// function resizeInput() {
-//   todoInputText.style.width = todoInputText.value.length + "ch";
-// }
+function generateUniqueId() {
+  // Generate a unique ID using a timestamp or a library like uuid.
+  return Date.now().toString();
+}
