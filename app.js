@@ -17,6 +17,7 @@ function addToDo(e) {
   let task = todoInputBox.value;
 
   if (!task) {
+    // e.preventDefault();
     alert("Please enter a task");
     return;
   }

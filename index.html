@@ -21,7 +21,7 @@
     <main>
       <div class="main">
         <form
-          action="https://formsubmit.co/girlwithcheeks123@email.com"
+          action="https://formsubmit.co/girlwithcheeks123@gmail.com"
           method="POST"
         >
           <div class="todo-input-container">
@@ -35,8 +35,12 @@
               <i class="fas fa-plus-square"></i>
             </button>
           </div>
+          <!--so that there's no captcha when submitting a new todo-->
+          <input type="hidden" name="_captcha" value="false" />
+
           <div class="select-container">
-            <select class="filter-todos" name="todo-type">
+            <label for="filter-todos" class="sr-only">Task organization options</label> <!--for accessibility-->
+            <select id="filter-todos" class="filter-todos" name="todo-type">
               <option value="all">All</option>
               <option value="completed">Completed</option>
               <option value="uncompleted">Uncompleted</option>
